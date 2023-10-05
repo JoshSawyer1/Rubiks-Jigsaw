@@ -12,7 +12,7 @@ counter = 0
 
 # Loop to draw a pattern of diagonal lines
 for i in range(500):
-    x1 = 27
+    x1 = 0
     if counter % 2 == 0:
         # Calculate the starting y-coordinate for even rows
         y1 = (i * ((27 * maths.sqrt(3)) / 3))
