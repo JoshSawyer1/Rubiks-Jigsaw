@@ -14,7 +14,7 @@ counter = 0
 vertex_coordinates = []
 
 # Loop to draw a pattern of diagonal lines
-for i in range(500):
+for i in range(66):
     x1 = 0
     if counter % 2 == 0:
         # Calculate the starting y-coordinate for even rows
@@ -25,7 +25,7 @@ for i in range(500):
         inc = -((27 * maths.sqrt(3)) / 3)
 
     # Loop to draw diagonal lines in a row
-    for z in range(100):
+    for z in range(58):
         x2 = x1 + 27
         y2 = y1 + inc
 
@@ -52,7 +52,7 @@ y1 = 0
 y2 = 0
 
 # Loop to draw vertical lines
-for p in range(300):
+for p in range(56):
     # Calculate the coordinates of the top and bottom vertices
     x2 = x1
     y2 = y1 + 2700
