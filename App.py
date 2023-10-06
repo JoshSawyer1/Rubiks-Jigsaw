@@ -5,7 +5,7 @@ import math as maths
 window = tkinter.Tk()
 
 # Create a canvas widget with a white background and specified dimensions
-canvas = tkinter.Canvas(window, bg="purple", height=1000, width=1500)
+canvas = tkinter.Canvas(window, bg="white", height=1000, width=1500)
 
 # Initialize a counter variable
 counter = 0
