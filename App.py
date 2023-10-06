@@ -1,14 +1,16 @@
 import tkinter
 import math as maths
+import random
 
 # Create a Tkinter window
 window = tkinter.Tk()
 
 # Create a canvas widget with a white background and specified dimensions
-canvas = tkinter.Canvas(window, bg="white", height=1000, width=1500)
+canvas = tkinter.Canvas(window, bg="black", height=1000, width=1500)
 
 # Initialize a counter variable
 counter = 0
+colours = ["sky blue","red","green","orange","white","yellow"]
 
 # Create an empty list to store the coordinates of each vertex
 vertex_coordinates = []
@@ -28,12 +30,13 @@ for i in range(66):
     for z in range(58):
         x2 = x1 + 27
         y2 = y1 + inc
+        colour = random.choice(colours)
+        
+        # Create a line on the canvas from (x1, y1) to (x2, y2)
+        line = canvas.create_line(x1, y1, x2, y2, fill=colour)
 
         # Store the coordinates of the current vertex (x2, y2)
-        vertex_coordinates.append((x2, y2))
-
-        # Create a line on the canvas from (x1, y1) to (x2, y2)
-        line = canvas.create_line(x1, y1, x2, y2)
+        vertex_coordinates.append((x2, y2, colour))
 
         x1 = x2
         y1 = y2
@@ -62,7 +65,7 @@ for p in range(56):
     vertex_coordinates.append((x2, y2))
 
     # Create a vertical line on the canvas from (x1, y1) to (x2, y2)
-    line = canvas.create_line(x1, y1, x2, y2)
+    line = canvas.create_line(x1, y1, x2, y2, fill="white")
 
     x1 += 27
 
