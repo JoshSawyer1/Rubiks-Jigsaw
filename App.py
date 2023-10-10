@@ -1,3 +1,4 @@
+# Board
 import tkinter
 import math as maths
 import random
