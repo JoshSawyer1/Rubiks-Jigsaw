@@ -5,7 +5,7 @@ import random
 class frog:
     # Class variables
     isFrog = True
-    colours = ("white", "yellow", "red", "green", "blue", "oragne")
+    colours = ("white", "yellow", "red", "green", "blue", "orange")
 
     # Def function for frogs, not same frog. sets 'self' for frogs.
     def __init__(self, RArm, LArm, RTorso, LTorso, RLeg, LLeg, Head):
