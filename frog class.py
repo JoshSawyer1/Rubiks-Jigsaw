@@ -29,5 +29,5 @@ class frog:
         self.Head = self.colourList[6]
 
     # Random colours
-    def randomColourFrog(self):
+    #def randomColourFrog(self):
         
