@@ -2,10 +2,12 @@
 # Import libraries
 import tkinter
 import math as maths
+from frog import frog
+import pickle
 
 # Set window and canvas geometry
 window = tkinter.Tk()
-window.geometry("500x300")
+window.geometry("500x320")
 window.title("Input screen")
 canvas = tkinter.Canvas(window, bg="black", height=250, width=270)
 
@@ -19,15 +21,24 @@ RTorso_counter = 1
 LLeg_counter = 1
 RLeg_counter = 1
 
-# Define the setting functions that toggle each colour
-def set_Head():
-    global Head_counter
-    Head_polygon = canvas.create_polygon(x+81,y+(45*maths.sqrt(3)),x+162,y+(18*maths.sqrt(3)),x+243,y+(45*maths.sqrt(3)),x+162,y+(72*maths.sqrt(3)),x+81,y+(45*maths.sqrt(3)),fill=colours[Head_counter])
-    if Head_counter == 5:
-        Head_counter = 0
-    else:
-        Head_counter += 1
+# Create empty board to name frogs
+grid_x = 0
+grid_y = 0
+a = []
+b = []
+c = []
+d = []
+e = []
+f = []
+g = []
+h = []
+i = []
+grid = [a,b,c,d,e,f,g,h,i]
 
+# Open file for handling
+f = open("froglist.txt","wb")
+
+# Define the setting functions that toggle each colour
 def set_LArm():
     global LArm_counter
     LArm_polygon = canvas.create_polygon(x+162,y-(18*maths.sqrt(3)),x+216,y,x+216,y+(18*maths.sqrt(3)),x+162,y,fill=colours[LArm_counter])
@@ -76,26 +87,53 @@ def set_RLeg():
     else:
         RLeg_counter += 1
 
+def set_Head():
+    global Head_counter
+    Head_polygon = canvas.create_polygon(x+81,y+(45*maths.sqrt(3)),x+162,y+(18*maths.sqrt(3)),x+243,y+(45*maths.sqrt(3)),x+162,y+(72*maths.sqrt(3)),x+81,y+(45*maths.sqrt(3)),fill=colours[Head_counter])
+    if Head_counter == 5:
+        Head_counter = 0
+    else:
+        Head_counter += 1
+
+# Create function to store frogs
+def submit_frog():
+    global grid_x
+    global grid_y
+    grid[grid_x].append(frog(colours[RArm_counter],colours[LArm_counter],colours[RTorso_counter],colours[LTorso_counter],colours[RLeg_counter],colours[LLeg_counter],colours[Head_counter]))
+    pickle.dump(grid[grid_x][grid_y], f)
+    if grid_x == 8:
+        grid_x = 0
+        grid_y += 1
+    else:
+        grid_x += 1
+
+# Close file
+def close_file():
+    f.close()
+
 # Placement of buttons
-Head_button = tkinter.Button(window, command=set_Head, text="Head").place(x=10,y=10)
 LArm_button = tkinter.Button(window, command=set_LArm, text="Left arm").place(x=10,y=40)
 RArm_button = tkinter.Button(window, command=set_RArm, text="Right arm").place(x=10,y=70)
 LTorso_button = tkinter.Button(window, command=set_LTorso, text="Left torso").place(x=10,y=100)
 RTorso_button = tkinter.Button(window, command=set_RTorso, text="Right torso").place(x=10,y=130)
 LLeg_button = tkinter.Button(window, command=set_LLeg, text="Left leg").place(x=10,y=160)
 RLeg_button = tkinter.Button(window, command=set_RLeg, text="Right leg").place(x=10,y=190)
+Head_button = tkinter.Button(window, command=set_Head, text="Head").place(x=10,y=10)
+
+submit_frog_button = tkinter.Button(window, command=lambda: submit_frog(), text="Submit frog").place(x=10, y=250)
+close_file_button = tkinter.Button(window, command=lambda: close_file(), text="Close file").place(x=10, y=280)
 
 # Creating initial polygon
 x = 20
 y = 50
 
-Head_polygon = canvas.create_polygon(x+81,y+(45*maths.sqrt(3)),x+162,y+(18*maths.sqrt(3)),x+243,y+(45*maths.sqrt(3)),x+162,y+(72*maths.sqrt(3)),x+81,y+(45*maths.sqrt(3)),fill="white")
 LArm_polygon = canvas.create_polygon(x+162,y-(18*maths.sqrt(3)),x+216,y,x+216,y+(18*maths.sqrt(3)),x+162,y,fill="white")
 LTorso_polygon = canvas.create_polygon(x+81,y+(27*maths.sqrt(3)),x+135,y+(9*maths.sqrt(3)),x+135,y-(9*maths.sqrt(3)),x+162,y-(18*maths.sqrt(3)),x+162,y,x+162,y+(18*maths.sqrt(3)),x+81,y+(45*maths.sqrt(3)),x+81,y+(27*maths.sqrt(3)), fill="white")
 RArm_polygon = canvas.create_polygon(x+162,y+(108*maths.sqrt(3)),x+216, y+(90*maths.sqrt(3)),x+216, y+(72*maths.sqrt(3)),x+162, y+(90*maths.sqrt(3)),fill="white")
 RTorso_polygon = canvas.create_polygon(x+81,y+(45*maths.sqrt(3)),x+81,y+(63*maths.sqrt(3)),x+135,y+(81*maths.sqrt(3)),x+135,y+(99*maths.sqrt(3)),x+162,y+(108*maths.sqrt(3)),x+162,y+(72*maths.sqrt(3)),x+81,y+(45*maths.sqrt(3)), fill="white")
 LLeg_polygon = canvas.create_polygon(x,y,x+81,y+(27*maths.sqrt(3)),x+81,y+(45*maths.sqrt(3)),x,y+(18*maths.sqrt(3)),x,y, fill="white")
 RLeg_polygon = canvas.create_polygon(x+81,y+(45*maths.sqrt(3)),x+81,y+(63*maths.sqrt(3)),x,y+(90*maths.sqrt(3)),x,y+(72*maths.sqrt(3)),x+81,y+(45*maths.sqrt(3)), fill="white")
+Head_polygon = canvas.create_polygon(x+81,y+(45*maths.sqrt(3)),x+162,y+(18*maths.sqrt(3)),x+243,y+(45*maths.sqrt(3)),x+162,y+(72*maths.sqrt(3)),x+81,y+(45*maths.sqrt(3)),fill="white")
 
 # Packing and ending main loop
 canvas.pack(padx=10,pady=20)
