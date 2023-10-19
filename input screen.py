@@ -7,7 +7,7 @@ import pickle
 
 # Set window and canvas geometry
 window = tkinter.Tk()
-window.geometry("500x320")
+window.geometry("500x350")
 window.title("Input screen")
 canvas = tkinter.Canvas(window, bg="black", height=250, width=270)
 
@@ -95,17 +95,21 @@ def set_Head():
     else:
         Head_counter += 1
 
-# Create function to store frogs
+# Create function to append frogs to grid
 def submit_frog():
     global grid_x
     global grid_y
     grid[grid_x].append(frog(colours[RArm_counter],colours[LArm_counter],colours[RTorso_counter],colours[LTorso_counter],colours[RLeg_counter],colours[LLeg_counter],colours[Head_counter]))
-    pickle.dump(grid[grid_x][grid_y], f)
     if grid_x == 8:
         grid_x = 0
         grid_y += 1
     else:
         grid_x += 1
+
+# Create function to store grid
+def submit_grid():
+    global grid
+    pickle.dump(grid, f)
 
 # Close file
 def close_file():
@@ -121,7 +125,8 @@ RLeg_button = tkinter.Button(window, command=set_RLeg, text="Right leg").place(x
 Head_button = tkinter.Button(window, command=set_Head, text="Head").place(x=10,y=10)
 
 submit_frog_button = tkinter.Button(window, command=lambda: submit_frog(), text="Submit frog").place(x=10, y=250)
-close_file_button = tkinter.Button(window, command=lambda: close_file(), text="Close file").place(x=10, y=280)
+submit_grid_button = tkinter.Button(window, command=lambda: submit_grid(), text="Submit grid").place(x=10, y=280)
+close_file_button = tkinter.Button(window, command=lambda: close_file(), text="Close file").place(x=10, y=310)
 
 # Creating initial polygon
 x = 20
