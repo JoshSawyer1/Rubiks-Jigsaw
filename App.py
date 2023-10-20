@@ -2,7 +2,7 @@
 import tkinter
 import math as maths
 import random
-from frog import frog
+from frogclass import frog
 import pickle
 
 # Create a Tkinter window
@@ -62,7 +62,16 @@ for p in range(100):
 
     x1 += 27
 
+# Unpickle grid
+f = open("frogspaghetti.txt", "rb")
+grid = pickle.load(f)
+print(grid)
+f.close()
+
+# Place frogs
 counter = 1
+grid_x = 0
+grid_y = 0
 x_start = 27
 y = 18*maths.sqrt(3)
 y_start = 18*maths.sqrt(3)
@@ -72,22 +81,22 @@ for i in range(9):
     else:
         x = x_start+81
     for z in range(9):
-        left_leg = canvas.create_polygon(x,y,x+81,y+(27*maths.sqrt(3)),x+81,y+(45*maths.sqrt(3)),x,y+(18*maths.sqrt(3)),x,y, fill="white")
-        right_leg = canvas.create_polygon(x+81,y+(45*maths.sqrt(3)),x+81,y+(63*maths.sqrt(3)),x,y+(90*maths.sqrt(3)),x,y+(72*maths.sqrt(3)),x+81,y+(45*maths.sqrt(3)), fill="red")
-        right_torso = canvas.create_polygon(x+81,y+(45*maths.sqrt(3)),x+81,y+(63*maths.sqrt(3)),x+135,y+(81*maths.sqrt(3)),x+135,y+(99*maths.sqrt(3)),x+162,y+(108*maths.sqrt(3)),x+162,y+(72*maths.sqrt(3)),x+81,y+(45*maths.sqrt(3)), fill="orange")
-        left_torso = canvas.create_polygon(x+81,y+(27*maths.sqrt(3)),x+135,y+(9*maths.sqrt(3)),x+135,y-(9*maths.sqrt(3)),x+162,y-(18*maths.sqrt(3)),x+162,y,x+162,y+(18*maths.sqrt(3)),x+81,y+(45*maths.sqrt(3)),x+81,y+(27*maths.sqrt(3)), fill="green")
-        head = canvas.create_polygon(x+81,y+(45*maths.sqrt(3)),x+162,y+(18*maths.sqrt(3)),x+243,y+(45*maths.sqrt(3)),x+162,y+(72*maths.sqrt(3)),x+81,y+(45*maths.sqrt(3)),fill="blue")
-        left_arm = canvas.create_polygon(x+162,y-(18*maths.sqrt(3)),x+216,y,x+216,y+(18*maths.sqrt(3)),x+162,y,fill="yellow")
-        right_arm = canvas.create_polygon(x+162,y+(108*maths.sqrt(3)),x+216, y+(90*maths.sqrt(3)),x+216, y+(72*maths.sqrt(3)),x+162, y+(90*maths.sqrt(3)),fill="white")
+        current = grid[grid_x][grid_y]
+        Head_polygon = canvas.create_polygon(x+81,y+(45*maths.sqrt(3)),x+162,y+(18*maths.sqrt(3)),x+243,y+(45*maths.sqrt(3)),x+162,y+(72*maths.sqrt(3)),x+81,y+(45*maths.sqrt(3)),fill=current.Head)
+        LArm_polygon = canvas.create_polygon(x+162,y-(18*maths.sqrt(3)),x+216,y,x+216,y+(18*maths.sqrt(3)),x+162,y,fill=current.LArm)
+        RArm_polyon = canvas.create_polygon(x+162,y+(108*maths.sqrt(3)),x+216, y+(90*maths.sqrt(3)),x+216, y+(72*maths.sqrt(3)),x+162, y+(90*maths.sqrt(3)),fill=current.RArm)
+        LTorso_polygon = canvas.create_polygon(x+81,y+(27*maths.sqrt(3)),x+135,y+(9*maths.sqrt(3)),x+135,y-(9*maths.sqrt(3)),x+162,y-(18*maths.sqrt(3)),x+162,y,x+162,y+(18*maths.sqrt(3)),x+81,y+(45*maths.sqrt(3)),x+81,y+(27*maths.sqrt(3)), fill=current.LTorso)
+        RTorso_polygon = canvas.create_polygon(x+81,y+(45*maths.sqrt(3)),x+81,y+(63*maths.sqrt(3)),x+135,y+(81*maths.sqrt(3)),x+135,y+(99*maths.sqrt(3)),x+162,y+(108*maths.sqrt(3)),x+162,y+(72*maths.sqrt(3)),x+81,y+(45*maths.sqrt(3)), fill=current.RTorso)
+        LLeg_polygon = canvas.create_polygon(x,y,x+81,y+(27*maths.sqrt(3)),x+81,y+(45*maths.sqrt(3)),x,y+(18*maths.sqrt(3)),x,y, fill=current.LLeg)
+        RLeg_polygon = canvas.create_polygon(x+81,y+(45*maths.sqrt(3)),x+81,y+(63*maths.sqrt(3)),x,y+(90*maths.sqrt(3)),x,y+(72*maths.sqrt(3)),x+81,y+(45*maths.sqrt(3)), fill=current.RLeg)
         x = x + 162
+        if grid_x == 8:
+            grid_x = 0
+            grid_y += 1
+        else:
+            grid_x += 1
     y = y_start+((i+1)*81*maths.sqrt(3))
     counter += 1
-
-# Test for unpickling
-f = open("froglist.txt", "rb")
-grid = pickle.load(f)
-print(grid)
-f.close()
 
 # Pack the canvas widget into the window
 canvas.pack()
