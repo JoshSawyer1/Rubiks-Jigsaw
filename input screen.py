@@ -2,7 +2,7 @@
 # Import libraries
 import tkinter
 import math as maths
-from frog import frog
+from frogclass import frogclass
 import pickle
 
 # Set window and canvas geometry
